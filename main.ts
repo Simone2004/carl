@@ -1,4 +1,5 @@
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    carletti.startEffect(effects.confetti, 500)
     animation.runImageAnimation(
     carletti,
     [img`
@@ -104,29 +105,32 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         . f d d f f e e d d b f f f f . 
         . f f f f f f f f f f f f f . . 
         `],
-    500,
+    100,
     false
     )
+    mela = sprites.createProjectileFromSprite(img`
+        . . . . . . . e c 7 . . . . . . 
+        . . . . e e e c 7 7 e e . . . . 
+        . . c e e e e c 7 e 2 2 e e . . 
+        . c e e e e e c 6 e e 2 2 2 e . 
+        . c e e e 2 e c c 2 4 5 4 2 e . 
+        c e e e 2 2 2 2 2 2 4 5 5 2 2 e 
+        c e e 2 2 2 2 2 2 2 2 4 4 2 2 e 
+        c e e 2 2 2 2 2 2 2 2 2 2 2 2 e 
+        c e e 2 2 2 2 2 2 2 2 2 2 2 2 e 
+        c e e 2 2 2 2 2 2 2 2 2 2 2 2 e 
+        c e e 2 2 2 2 2 2 2 2 2 2 4 2 e 
+        . e e e 2 2 2 2 2 2 2 2 2 4 e . 
+        . 2 e e 2 2 2 2 2 2 2 2 4 2 e . 
+        . . 2 e e 2 2 2 2 2 4 4 2 e . . 
+        . . . 2 2 e e 4 4 4 2 e e . . . 
+        . . . . . 2 2 e e e e . . . . . 
+        `, carletti, -23, -24)
 })
+let colcone: Sprite = null
+let mela: Sprite = null
 let carletti: Sprite = null
-let mela = sprites.create(img`
-    . . . . . . . e c 7 . . . . . . 
-    . . . . e e e c 7 7 e e . . . . 
-    . . c e e e e c 7 e 2 2 e e . . 
-    . c e e e e e c 6 e e 2 2 2 e . 
-    . c e e e 2 e c c 2 4 5 4 2 e . 
-    c e e e 2 2 2 2 2 2 4 5 5 2 2 e 
-    c e e 2 2 2 2 2 2 2 2 4 4 2 2 e 
-    c e e 2 2 2 2 2 2 2 2 2 2 2 2 e 
-    c e e 2 2 2 2 2 2 2 2 2 2 2 2 e 
-    c e e 2 2 2 2 2 2 2 2 2 2 2 2 e 
-    c e e 2 2 2 2 2 2 2 2 2 2 4 2 e 
-    . e e e 2 2 2 2 2 2 2 2 2 4 e . 
-    . 2 e e 2 2 2 2 2 2 2 2 4 2 e . 
-    . . 2 e e 2 2 2 2 2 4 4 2 e . . 
-    . . . 2 2 e e 4 4 4 2 e e . . . 
-    . . . . . 2 2 e e e e . . . . . 
-    `, SpriteKind.Projectile)
+scene.setBackgroundColor(15)
 carletti = sprites.create(img`
     . . . . f f f f f . . . . . . . 
     . . . f e e e e e f . . . . . . 
@@ -145,6 +149,26 @@ carletti = sprites.create(img`
     . . . f d d c d d b b d f . . . 
     . . . . f f f f f f f f f . . . 
     `, SpriteKind.Player)
-carletti.setPosition(0, 112)
 controller.moveSprite(carletti, 100, 0)
+carletti.setPosition(80, 112)
 carletti.setStayInScreen(true)
+game.onUpdateInterval(1000, function () {
+    colcone = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . 4 4 4 . . . . 4 4 4 . . . . 
+        . 4 5 5 5 e . . e 5 5 5 4 . . . 
+        4 5 5 5 5 5 e e 5 5 5 5 5 4 . . 
+        4 5 5 4 4 5 5 5 5 4 4 5 5 4 . . 
+        e 5 4 4 5 5 5 5 5 5 4 4 5 e . . 
+        . e e 5 5 5 5 5 5 5 5 e e . . . 
+        . . e 5 f 5 5 5 5 f 5 e . . . . 
+        . . f 5 5 5 4 4 5 5 5 f . f f . 
+        . . . 4 5 5 f f 5 5 6 f f 5 f . 
+        . . . f 6 6 6 6 6 6 4 f 5 5 f . 
+        . . . f 5 5 5 5 5 5 5 4 5 f . . 
+        . . . . f 5 4 5 f 5 f f f . . . 
+        . . . . . f f f f f f f . . . . 
+        `, SpriteKind.Enemy)
+    colcone.setPosition(0, 0)
+    colcone.setVelocity(50, 50)
+})
